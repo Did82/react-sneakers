@@ -9,11 +9,16 @@ module.exports = {
             },
             colors: {
                 'back': '#E7F6FF',
+                'btn': '#9DD458',
             }
         },
     },
     variants: {
-        extend: {},
+        extend: {
+            opacity: ['active'],
+            backgroundColor: ['active'],
+            translate: ['group-hover'],
+        },
     },
     plugins: [],
 }
