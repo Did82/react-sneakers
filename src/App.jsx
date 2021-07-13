@@ -3,9 +3,72 @@ import Card from "./components/Card";
 import Header from "./components/Header";
 import Ahead from "./components/Ahead";
 
+const store = [
+    {
+        name: 'Мужские Кроссовки Nike Blazer Mid Suede',
+        price: 12999,
+        imgUrl: '/img/goods/1.jpg'
+    },
+    {
+        name: 'Мужские Кроссовки Nike Air Max 270',
+        price: 12999,
+        imgUrl: '/img/goods/2.jpg'
+    },
+    {
+        name: 'Мужские Кроссовки Nike Blazer Mid Suede',
+        price: 8499,
+        imgUrl: '/img/goods/3.jpg'
+    },
+    {
+        name: 'Кроссовки Puma X Aka Boku Future Rider',
+        price: 8999,
+        imgUrl: '/img/goods/4.jpg'
+    },
+    {
+        name: 'Мужские Кроссовки Under Armour Curry 8',
+        price: 15199,
+        imgUrl: '/img/goods/5.jpg'
+    },
+    {
+        name: 'Мужские Кроссовки Nike Kyrie 7',
+        price: 11299,
+        imgUrl: '/img/goods/6.jpg'
+    },
+    {
+        name: 'Мужские Кроссовки Jordan Air Jordan 11',
+        price: 10799,
+        imgUrl: '/img/goods/7.jpg'
+    },
+    {
+        name: 'Мужские Кроссовки Nike LeBron XVIII',
+        price: 16499,
+        imgUrl: '/img/goods/8.jpg'
+    },
+    {
+        name: 'Мужские Кроссовки Nike Lebron XVIII Low',
+        price: 13999,
+        imgUrl: '/img/goods/9.jpg'
+    },
+    {
+        name: 'Мужские Кроссовки Nike Blazer Mid Suede',
+        price: 8499,
+        imgUrl: '/img/goods/10.jpg'
+    },
+    {
+        name: 'Кроссовки Puma X Aka Boku Future Rider',
+        price: 8999,
+        imgUrl: '/img/goods/11.jpg'
+    },
+    {
+        name: 'Мужские Кроссовки Nike Kyrie Flytrap IV',
+        price: 11299,
+        imgUrl: '/img/goods/12.jpg'
+    },
+]
+
 const App = () => {
     return (
-        <div className="bg-white rounded-3xl shadow-lg max-w-wrapper mt-12 mx-auto">
+        <div className="bg-white rounded-3xl shadow-lg max-w-wrapper my-12 mx-auto">
             <Header />
             <Ahead />
 
@@ -20,10 +83,9 @@ const App = () => {
                     </div>
                 </div>
                 <div className="flex p-4 flex-wrap gap-8">
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
+                    {
+                        store.map((obj) => <Card title={obj.name} price={obj.price} img={obj.imgUrl} onClick={() => alert(obj.name)}/>)
+                    }
                 </div>
             </main>
 
