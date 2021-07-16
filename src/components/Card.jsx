@@ -1,10 +1,10 @@
 import React from "react";
 
-const Card = ( {title, imgUrl, price, onClickPlus, onClickFavorite} ) => {
+const Card = ( {id, title, imgUrl, price, onClickPlus, onClickFavorite} ) => {
     const [isAdded, setIsAdded] = React.useState(false);
     const onClickPlusButton = () => {
         setIsAdded(!isAdded);
-        onClickPlus( {title, imgUrl, price} );
+        onClickPlus( {id, title, imgUrl, price} );
     };
     return (
         <div className="border rounded-2xl w-56 p-6 flex flex-col gap-4 relative hover:shadow-xl transition ease-in-out duration-200 transform hover:-translate-y-1">
