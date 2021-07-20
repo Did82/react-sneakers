@@ -1,7 +1,6 @@
 import React, {Fragment} from "react";
 
 const Ahead = ({ onClose, items = [], onRemove }) => {
-    console.log(items)
     return (
         <aside className="fixed inset-0 overflow-y-hidden z-10">
             <div className="absolute inset-0 overflow-hidden">
@@ -27,7 +26,7 @@ const Ahead = ({ onClose, items = [], onRemove }) => {
                                     </div>
                                     <button
                                         className="border-0 opacity-60 hover:opacity-100 transition-opacity focus:outline-none">
-                                        <img onClick={() => onRemove(obj.id)} src="/img/delete.svg" alt="Delete"
+                                        <img onClick={() => onRemove(obj)} src="/img/delete.svg" alt="Delete"
                                              className="w-14"/>
                                     </button>
                                 </div>
@@ -59,8 +58,6 @@ const Ahead = ({ onClose, items = [], onRemove }) => {
                             <span className="text-center w-52 text-sm">Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.</span>
                         </div>
                     </Fragment>}
-
-
                 </div>
             </div>
         </aside>

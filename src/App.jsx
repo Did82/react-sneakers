@@ -7,37 +7,48 @@ import axios from "axios";
 const App = () => {
     const [goods, setGoods] = React.useState([]);
     const [goodsInCart, setGoodsInCart] = React.useState([]);
+    const [goodsInFavirites, setGoodsInFavirites] = React.useState([]);
     const [isCartOpen, setIsCartOpened] = React.useState(false);
     const [searchValue, setSearchValue] = React.useState('');
 
     React.useEffect(() => {
-        axios.get('https://60f0071af587af00179d3cf2.mockapi.io/goods').then(res => setGoods(res.data));
-        axios.get('https://60f0071af587af00179d3cf2.mockapi.io/cart').then(res => setGoodsInCart(res.data));
-    },[]);
-
-    React.useEffect(() => {
-        axios.get('https://60f0071af587af00179d3cf2.mockapi.io/cart').then(res => setGoodsInCart(res.data));
-    }, [isCartOpen])
+        axios
+            .get('https://60f0071af587af00179d3cf2.mockapi.io/cart')
+            .then(res => setGoodsInCart(res.data));
+        axios
+            .get('https://60f0071af587af00179d3cf2.mockapi.io/goods')
+            .then(res => setGoods(res.data));
+    }, [isCartOpen]);
 
     const onChangeSearchValue = (event) => {
         setSearchValue(event.target.value);
     }
 
     const onAddToCart = (obj) => {
-        axios.post('https://60f0071af587af00179d3cf2.mockapi.io/cart', obj);
-        setGoodsInCart(prev => [...prev, obj]);
+        axios.post(`https://60f0071af587af00179d3cf2.mockapi.io/cart`, obj)
+            .then(() => setGoodsInCart(prev => [...prev, obj]));
     }
 
-    const onRemoveCartItem = (id) => {
-        console.log(id)
-        axios.delete(`https://60f0071af587af00179d3cf2.mockapi.io/cart/${id}`);
-        setGoodsInCart(prev => prev.filter(item => item.id !== id));
+    const onAddToFavorites = (obj) => {
+        axios.post(`https://60f0071af587af00179d3cf2.mockapi.io/favorites`, obj)
+            .then(() => setGoodsInFavirites(prev => [...prev, obj]));
     }
+
+    const onRemoveCartItem = (obj) => {
+        axios.delete(`https://60f0071af587af00179d3cf2.mockapi.io/cart/${obj.goodId}`)
+            .then(() => setGoodsInCart(prev => prev.filter(item => item.id !== obj.id)));
+    }
+
+    const isGoodsInCart = id => !!goodsInCart.find(goods => goods.id === id);
 
     return (
         <div className="bg-white rounded-3xl shadow-lg max-w-wrapper my-12 mx-auto">
             <Header onClickCart={() => setIsCartOpened(true)}/>
-            {isCartOpen && <Ahead onClose={() => setIsCartOpened(false)} items={goodsInCart} onRemove={onRemoveCartItem}/>}
+            {isCartOpen &&
+            <Ahead
+                onClose={() => setIsCartOpened(false)}
+                items={goodsInCart}
+                onRemove={onRemoveCartItem}/>}
 
             <main className="p-4">
                 <div className="flex items-center justify-between m-4">
@@ -52,7 +63,8 @@ const App = () => {
                             className="border-0 outline-none h-10 text-gray-700"
                             type="text"
                             placeholder="Поиск..."/>
-                        {searchValue && <img onClick={() => setSearchValue('')} src="/img/delete.svg" alt="Clear" className="mr-2 justify-self-end w-6"/>}
+                        {searchValue && <img onClick={() => setSearchValue('')} src="/img/delete.svg" alt="Clear"
+                                             className="mr-2 justify-self-end w-6"/>}
                     </div>
                 </div>
                 <div className="flex p-4 flex-wrap gap-8 justify-center">
@@ -60,16 +72,18 @@ const App = () => {
                         goods
                             .filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()))
                             .map((item) => (
-                                <Card
-                                    key={item.imgUrl}
-                                    title={item.name}
-                                    price={item.price}
-                                    imgUrl={item.imgUrl}
-                                    onClickFavorite={() => alert(item.name)}
-                                    onClickPlus={onAddToCart}
-                                />
+                                    <Card
+                                        key={item.id}
+                                        id={item.id}
+                                        title={item.name}
+                                        price={item.price}
+                                        imgUrl={item.imgUrl}
+                                        onClickFavorite={onAddToFavorites}
+                                        onClickPlus={onAddToCart}
+                                        goodsInCart={isGoodsInCart(item.id)}
+                                    />
+                                )
                             )
-                        )
                     }
                 </div>
             </main>
@@ -79,4 +93,3 @@ const App = () => {
 }
 
 export default App
-
