@@ -1,6 +1,7 @@
 import React, {Fragment} from "react";
 
-const Ahead = ({ onClose, items = [], onRemove }) => {
+const Ahead = ({onClose, goodsInCart = [], goods, onRemove}) => {
+    const itemInCart = goodsInCart.map(item => goods.find(obj => item.good === obj.id));
     return (
         <aside className="fixed inset-0 overflow-y-hidden z-10">
             <div className="absolute inset-0 overflow-hidden">
@@ -14,23 +15,27 @@ const Ahead = ({ onClose, items = [], onRemove }) => {
                             <img src="/img/delete.svg" alt="Close"/>
                         </button>
                     </div>
-                    {items.length > 0 ? <Fragment>
+                    {goodsInCart.length > 0 ? <Fragment>
                         <div className="flex flex-col gap-4 flex-grow overflow-auto">
-                            {items.map((obj) => (
-                                <div key={obj.id}
-                                     className="flex items-center justify-between gap-4 border rounded-xl p-4">
-                                    <img className="" src={obj.imgUrl} alt="Sneakers" height={70} width={70}/>
-                                    <div className="flex flex-col gap-2">
-                                        <p className="text-sm">{obj.title}</p>
-                                        <p className="font-bold">{obj.price} руб.</p>
+                            {goods
+                                .filter(obj => !!goodsInCart.find(item => item.good === obj.id))
+                                .map(obj => (
+                                    <div key={obj.id}
+                                         className="flex items-center justify-between gap-4 border rounded-xl p-4">
+                                        <img className="" src={obj.imgUrl} alt="Sneakers" height={70} width={70}/>
+                                        <div className="flex flex-col gap-2">
+                                            <p className="text-sm">{obj.name}</p>
+                                            <p className="font-bold">{obj.price} руб.</p>
+                                        </div>
+                                        <button
+                                            className="border-0 opacity-60 hover:opacity-100 transition-opacity focus:outline-none">
+                                            <img
+                                                onClick={() => onRemove(goodsInCart.find(item => item.good === obj.id))}
+                                                src="/img/delete.svg" alt="Delete"
+                                                className="w-14"/>
+                                        </button>
                                     </div>
-                                    <button
-                                        className="border-0 opacity-60 hover:opacity-100 transition-opacity focus:outline-none">
-                                        <img onClick={() => onRemove(obj)} src="/img/delete.svg" alt="Delete"
-                                             className="w-14"/>
-                                    </button>
-                                </div>
-                            ))}
+                                ))}
                         </div>
                         <div className="flex flex-col gap-2  flex-none">
                             <div className="flex justify-between">
