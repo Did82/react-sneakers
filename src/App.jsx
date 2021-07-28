@@ -14,32 +14,40 @@ const App = () => {
     const [searchValue, setSearchValue] = React.useState('');
 
     React.useEffect(() => {
-        axios
-            .get('https://60f0071af587af00179d3cf2.mockapi.io/goods')
-            .then(res => setGoods(res.data));
-        axios
-            .get('https://60f0071af587af00179d3cf2.mockapi.io/favorites')
-            .then(res => setGoodsInFavorites(res.data));
-        axios
-            .get('https://60f0071af587af00179d3cf2.mockapi.io/cart')
-            .then(res => setGoodsInCart(res.data));
+        const goods = () => axios.get('https://60f0071af587af00179d3cf2.mockapi.io/goods');
+        const cart = () => axios.get('https://60f0071af587af00179d3cf2.mockapi.io/cart');
+        const favorites = () => axios.get('https://60f0071af587af00179d3cf2.mockapi.io/favorites');
+
+        Promise.all([cart(), favorites(), goods()])
+            .then(res => {
+                setGoodsInCart(res[0].data);
+                setGoodsInFavorites(res[1].data);
+                setGoods(res[2].data);
+            });
     }, [])
 
     const onChangeSearchValue = (event) => {
         setSearchValue(event.target.value);
     }
 
-    const isGoodsInCart = id => !!goodsInCart.find(goods => goods.good === id);
-    const isGoodsInFavorites = id => !!goodsInFavorites.find(goods => goods.good === id);
+    const isGoodsInCart = id => goodsInCart.some(good => good.good === id);
+    const isGoodsInFavorites = id => goodsInFavorites.some(good => good.good === id);
 
     const onAddToCart = (obj) => {
-        axios.post(`https://60f0071af587af00179d3cf2.mockapi.io/cart`, obj)
-            .then(res => setGoodsInCart(prev => [...prev, res.data]))
+        const item = goodsInCart.find(good => good.good === obj.good);
+        if (isGoodsInCart(obj.good)) {
+            axios.delete(`https://60f0071af587af00179d3cf2.mockapi.io/cart/${item.id}`)
+                .then(res => console.log('item moved from cart'))
+                .then(() => setGoodsInCart(prev => prev.filter(el => el.good !== obj.good)))
+        } else {
+            axios.post(`https://60f0071af587af00179d3cf2.mockapi.io/cart`, obj)
+                .then(res => setGoodsInCart(prev => [...prev, res.data]))
+        }
     }
 
     const onAddToFavorites = (obj) => {
         const item = goodsInFavorites.find(good => good.good === obj.good);
-        if (goodsInFavorites.find(goods => goods.good === obj.good)) {
+        if (isGoodsInFavorites(obj.good)) {
             axios.delete(`https://60f0071af587af00179d3cf2.mockapi.io/favorites/${item.id}`)
                 .then(res => console.log('item moved from favorites'))
                 .then(() => setGoodsInFavorites(prev => prev.filter(el => el.good !== obj.good)))

@@ -41,6 +41,7 @@ const Home = ({
                                     onClickPlus={onAddToCart}
                                     goodsInCart={isGoodsInCart(item.id)}
                                     goodsInFavorites={isGoodsInFavorites(item.id)}
+                                    loading={false}
                                     {...item}
                                 />
                             )
