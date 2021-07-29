@@ -12,6 +12,7 @@ const App = () => {
     const [goodsInFavorites, setGoodsInFavorites] = React.useState([]);
     const [isCartOpen, setIsCartOpened] = React.useState(false);
     const [searchValue, setSearchValue] = React.useState('');
+    const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
         const goods = () => axios.get('https://60f0071af587af00179d3cf2.mockapi.io/goods');
@@ -20,6 +21,7 @@ const App = () => {
 
         Promise.all([cart(), favorites(), goods()])
             .then(res => {
+                setIsLoading(false);
                 setGoodsInCart(res[0].data);
                 setGoodsInFavorites(res[1].data);
                 setGoods(res[2].data);
@@ -37,11 +39,13 @@ const App = () => {
         const item = goodsInCart.find(good => good.good === obj.good);
         if (isGoodsInCart(obj.good)) {
             axios.delete(`https://60f0071af587af00179d3cf2.mockapi.io/cart/${item.id}`)
-                .then(res => console.log('item moved from cart'))
+                .then(res => console.log(res.data))
+                .catch(err => console.log(err))
                 .then(() => setGoodsInCart(prev => prev.filter(el => el.good !== obj.good)))
         } else {
             axios.post(`https://60f0071af587af00179d3cf2.mockapi.io/cart`, obj)
                 .then(res => setGoodsInCart(prev => [...prev, res.data]))
+                .catch(err => console.log(err))
         }
     }
 
@@ -49,19 +53,21 @@ const App = () => {
         const item = goodsInFavorites.find(good => good.good === obj.good);
         if (isGoodsInFavorites(obj.good)) {
             axios.delete(`https://60f0071af587af00179d3cf2.mockapi.io/favorites/${item.id}`)
-                .then(res => console.log('item moved from favorites'))
+                .then(res => console.log(res.data))
+                .catch(err => console.log(err))
                 .then(() => setGoodsInFavorites(prev => prev.filter(el => el.good !== obj.good)))
         } else {
             axios.post(`https://60f0071af587af00179d3cf2.mockapi.io/favorites`, obj)
-                .then((res) => setGoodsInFavorites(prev => [...prev, res.data]));
+                .then((res) => setGoodsInFavorites(prev => [...prev, res.data]))
+                .catch(err => console.log(err))
+
         }
     }
 
     const onRemoveCartItem = (obj) => {
         axios.delete(`https://60f0071af587af00179d3cf2.mockapi.io/cart/${obj.id}`)
-            .then(() => {
-                console.log(`item moved from cart`);
-            })
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err))
             .then(() => setGoodsInCart(prev => prev.filter(item => item.id !== obj.id)));
     }
 
@@ -93,6 +99,7 @@ const App = () => {
                         isGoodsInCart={isGoodsInCart}
                         isGoodsInFavorites={isGoodsInFavorites}
                         goodsInFavirites={goodsInFavorites}
+                        isLoading={isLoading}
                     />
                 </Route>
                 <Route path="/favorites" exact>

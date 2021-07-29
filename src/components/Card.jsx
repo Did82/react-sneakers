@@ -2,6 +2,7 @@ import React, {Fragment} from "react";
 import ContentLoader from "react-content-loader";
 
 const Card = ({
+                  isLoading,
                   id,
                   name,
                   imgUrl,
@@ -9,8 +10,7 @@ const Card = ({
                   onClickPlus,
                   onClickFavorite,
                   goodsInCart,
-                  goodsInFavorites,
-                  loading = false
+                  goodsInFavorites
               }) => {
     const [isAdded, setIsAdded] = React.useState(goodsInCart);
     const [isFavorite, setIsFavorite] = React.useState(goodsInFavorites);
@@ -28,7 +28,7 @@ const Card = ({
     return (
         <div
             className="border rounded-2xl w-56 p-6 flex flex-col gap-4 relative hover:shadow-xl transition ease-in-out duration-200 transform hover:-translate-y-1">
-            {loading ?
+            {isLoading ?
                 <ContentLoader
                     speed={2}
                     width={200}

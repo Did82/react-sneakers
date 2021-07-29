@@ -8,10 +8,25 @@ const Home = ({
                   onAddToCart,
                   isGoodsInCart,
                   onAddToFavorites,
-                  goodsInFavirites,
                   setSearchValue,
-                  isGoodsInFavorites
+                  isGoodsInFavorites,
+                  isLoading
               }) => {
+    const renderItems = () => {
+        const filter = goods.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
+        return (isLoading ? [...Array(8)] : filter).map((item, index) => (
+                <Card
+                    isLoading={isLoading}
+                    key={item ? item.id : index}
+                    onClickFavorite={onAddToFavorites}
+                    onClickPlus={onAddToCart}
+                    goodsInCart={item && isGoodsInCart(item.id)}
+                    goodsInFavorites={item && isGoodsInFavorites(item.id)}
+                    {...item}
+                />
+            )
+        )
+    }
     return (
         <Fragment>
             <div className="flex items-center justify-between m-4">
@@ -31,22 +46,7 @@ const Home = ({
                 </div>
             </div>
             <div className="flex p-4 flex-wrap gap-10 justify-start">
-                {
-                    goods
-                        .filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()))
-                        .map((item) => (
-                                <Card
-                                    key={item.id}
-                                    onClickFavorite={onAddToFavorites}
-                                    onClickPlus={onAddToCart}
-                                    goodsInCart={isGoodsInCart(item.id)}
-                                    goodsInFavorites={isGoodsInFavorites(item.id)}
-                                    loading={false}
-                                    {...item}
-                                />
-                            )
-                        )
-                }
+                {renderItems()}
             </div>
         </Fragment>
     )
