@@ -1,7 +1,9 @@
 import React, {Fragment} from 'react';
 import Card from "../components/Card";
+import AppContext from "../context";
 
-const Favorites = ({goods, onAddToCart, isGoodsInCart, onAddToFavorites, goodsInFavorites, isGoodsInFavorites}) => {
+const Favorites = ({onAddToCart, isGoodsInCart, onAddToFavorites, isGoodsInFavorites}) => {
+    const {goods, goodsInFavorites} = React.useContext(AppContext);
     return (
         <Fragment>
             <div className="flex items-center justify-between m-4">

@@ -1,4 +1,5 @@
 import React from 'react';
+import AppContext from "./context";
 import Header from "./components/Header";
 import Ahead from "./components/Ahead";
 import axios from "axios";
@@ -72,48 +73,48 @@ const App = () => {
     }
 
     return (
-        <div className="bg-white rounded-3xl shadow-lg max-w-wrapper my-12 mx-auto">
-            <Header onClickCart={() => {
-                setIsCartOpened(true);
-                document.body.style.overflow = "hidden";
-            }}/>
-            {isCartOpen &&
-            <Ahead
-                onClose={() => {
-                    setIsCartOpened(false);
-                    document.body.style.overflow = "auto";
-                }}
-                goodsInCart={goodsInCart}
-                goods={goods}
-                onRemove={onRemoveCartItem}/>}
+        <AppContext.Provider value={{goods, goodsInCart, goodsInFavorites}}>
+            <div className="bg-white rounded-3xl shadow-lg max-w-wrapper my-12 mx-auto">
+                <Header onClickCart={() => {
+                    setIsCartOpened(true);
+                    document.body.style.overflow = "hidden";
+                }}/>
+                {isCartOpen &&
+                <Ahead
+                    onClose={() => {
+                        setIsCartOpened(false);
+                        document.body.style.overflow = "auto";
+                    }}
+                    goodsInCart={goodsInCart}
+                    goods={goods}
+                    onRemove={onRemoveCartItem}/>}
 
-            <main className="p-4">
-                <Route path="/" exact>
-                    <Home
-                        goods={goods}
-                        searchValue={searchValue}
-                        setSearchValue={setSearchValue}
-                        onChangeSearchValue={onChangeSearchValue}
-                        onAddToCart={onAddToCart}
-                        onAddToFavorites={onAddToFavorites}
-                        isGoodsInCart={isGoodsInCart}
-                        isGoodsInFavorites={isGoodsInFavorites}
-                        goodsInFavirites={goodsInFavorites}
-                        isLoading={isLoading}
-                    />
-                </Route>
-                <Route path="/favorites" exact>
-                    <Favorites
-                        goods={goods}
-                        onAddToCart={onAddToCart}
-                        onAddToFavorites={onAddToFavorites}
-                        isGoodsInCart={isGoodsInCart}
-                        isGoodsInFavorites={isGoodsInFavorites}
-                        goodsInFavorites={goodsInFavorites}
-                    />
-                </Route>
-            </main>
-        </div>
+                <main className="p-4">
+                    <Route path="/" exact>
+                        <Home
+                            goods={goods}
+                            searchValue={searchValue}
+                            setSearchValue={setSearchValue}
+                            onChangeSearchValue={onChangeSearchValue}
+                            onAddToCart={onAddToCart}
+                            onAddToFavorites={onAddToFavorites}
+                            isGoodsInCart={isGoodsInCart}
+                            isGoodsInFavorites={isGoodsInFavorites}
+                            goodsInFavirites={goodsInFavorites}
+                            isLoading={isLoading}
+                        />
+                    </Route>
+                    <Route path="/favorites" exact>
+                        <Favorites
+                            onAddToCart={onAddToCart}
+                            onAddToFavorites={onAddToFavorites}
+                            isGoodsInCart={isGoodsInCart}
+                            isGoodsInFavorites={isGoodsInFavorites}
+                        />
+                    </Route>
+                </main>
+            </div>
+        </AppContext.Provider>
     )
 }
 
