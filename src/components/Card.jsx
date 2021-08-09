@@ -1,5 +1,6 @@
 import React, {Fragment} from "react";
 import ContentLoader from "react-content-loader";
+import AppContext from "../context";
 
 const Card = ({
                   isLoading,
@@ -9,19 +10,15 @@ const Card = ({
                   price,
                   onClickPlus,
                   onClickFavorite,
-                  goodsInCart,
-                  goodsInFavorites
               }) => {
-    const [isAdded, setIsAdded] = React.useState(goodsInCart);
-    const [isFavorite, setIsFavorite] = React.useState(goodsInFavorites);
+    const { isGoodsInCart, isGoodsInFavorites } = React.useContext(AppContext);
 
     const onClickPlusButton = () => {
-        setIsAdded(!isAdded);
         onClickPlus({good: id});
     };
 
     const onClickFavoriteButton = () => {
-        setIsFavorite(!isFavorite);
+        // setIsFavorite(!isFavorite);
         onClickFavorite({good: id});
     };
 
@@ -47,7 +44,7 @@ const Card = ({
                     <button
                         className="absolute border-0  focus:outline-none transition ease-in-out duration-200 transform hover:scale-125"
                         onClick={onClickFavoriteButton}>
-                        <img src={isFavorite ? '/img/heart-active.svg' : '/img/heart.svg'} alt="Heart"/>
+                        <img src={isGoodsInFavorites(id) ? '/img/heart-active.svg' : '/img/heart.svg'} alt="Heart"/>
                     </button>
                     <img className="place-self-center" src={imgUrl} alt="sneakers" width={133} height={113}/>
                     <h5 className="font-normal">{name}</h5>
@@ -59,7 +56,7 @@ const Card = ({
                         <button
                             className="border-0 focus:outline-none transition ease-in-out duration-200 transform hover:scale-125"
                             onClick={onClickPlusButton}>
-                            <img src={isAdded ? '/img/checked.svg' : '/img/plus.svg'} alt="Plus"/>
+                            <img src={isGoodsInCart(id) ? '/img/checked.svg' : '/img/plus.svg'} alt="Plus"/>
                         </button>
                     </div>
                 </Fragment>}

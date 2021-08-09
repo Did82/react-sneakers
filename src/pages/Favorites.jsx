@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import Card from "../components/Card";
 import AppContext from "../context";
 
-const Favorites = ({onAddToCart, isGoodsInCart, onAddToFavorites, isGoodsInFavorites}) => {
+const Favorites = ({onAddToCart, onAddToFavorites}) => {
     const {goods, goodsInFavorites} = React.useContext(AppContext);
     return (
         <Fragment>
@@ -18,8 +18,6 @@ const Favorites = ({onAddToCart, isGoodsInCart, onAddToFavorites, isGoodsInFavor
                                     key={item.id}
                                     onClickFavorite={onAddToFavorites}
                                     onClickPlus={onAddToCart}
-                                    goodsInCart={isGoodsInCart(item.id)}
-                                    goodsInFavorites={isGoodsInFavorites(item.id)}
                                     favorites={goodsInFavorites}
                                     {...item}
                                 />

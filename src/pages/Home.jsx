@@ -6,10 +6,8 @@ const Home = ({
                   searchValue,
                   onChangeSearchValue,
                   onAddToCart,
-                  isGoodsInCart,
                   onAddToFavorites,
                   setSearchValue,
-                  isGoodsInFavorites,
                   isLoading
               }) => {
     const renderItems = () => {
@@ -20,8 +18,6 @@ const Home = ({
                     key={item ? item.id : index}
                     onClickFavorite={onAddToFavorites}
                     onClickPlus={onAddToCart}
-                    goodsInCart={item && isGoodsInCart(item.id)}
-                    goodsInFavorites={item && isGoodsInFavorites(item.id)}
                     {...item}
                 />
             )

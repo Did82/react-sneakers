@@ -36,6 +36,8 @@ const App = () => {
     const isGoodsInCart = id => goodsInCart.some(good => good.good === id);
     const isGoodsInFavorites = id => goodsInFavorites.some(good => good.good === id);
 
+    // const isAdded = (arr, id) => arr.some(good => good.good === id);
+
     const onAddToCart = (obj) => {
         const item = goodsInCart.find(good => good.good === obj.good);
         if (isGoodsInCart(obj.good)) {
@@ -73,7 +75,7 @@ const App = () => {
     }
 
     return (
-        <AppContext.Provider value={{goods, goodsInCart, goodsInFavorites}}>
+        <AppContext.Provider value={{goods, goodsInCart, goodsInFavorites, isGoodsInCart, isGoodsInFavorites}}>
             <div className="bg-white rounded-3xl shadow-lg max-w-wrapper my-12 mx-auto">
                 <Header onClickCart={() => {
                     setIsCartOpened(true);
@@ -98,8 +100,6 @@ const App = () => {
                             onChangeSearchValue={onChangeSearchValue}
                             onAddToCart={onAddToCart}
                             onAddToFavorites={onAddToFavorites}
-                            isGoodsInCart={isGoodsInCart}
-                            isGoodsInFavorites={isGoodsInFavorites}
                             goodsInFavirites={goodsInFavorites}
                             isLoading={isLoading}
                         />
@@ -108,8 +108,6 @@ const App = () => {
                         <Favorites
                             onAddToCart={onAddToCart}
                             onAddToFavorites={onAddToFavorites}
-                            isGoodsInCart={isGoodsInCart}
-                            isGoodsInFavorites={isGoodsInFavorites}
                         />
                     </Route>
                 </main>
