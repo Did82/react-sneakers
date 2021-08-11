@@ -6,16 +6,18 @@ import axios from "axios";
 const Ahead = ({onClose, goods, onRemove}) => {
     const [isOrdered, setIsOrdered] = React.useState(false);
     const [orderId, setOrderId] = React.useState();
-    const [isLoading, setisLoading] = React.useState(false);
     const {goodsInCart, setGoodsInCart} = React.useContext(AppContext);
     const onClickOrder = () => {
-        setisLoading(true);
         axios.post(`https://60f0071af587af00179d3cf2.mockapi.io/orders`, {goods: goodsInCart})
             .then(res => setOrderId(res.data.id))
             .catch(err => console.log(err));
         setIsOrdered(true);
+        goodsInCart.forEach(item => {
+            axios.delete(`https://60f0071af587af00179d3cf2.mockapi.io/cart/${item.id}`)
+                .then(res => console.log(res.data.id, res.statusText))
+                .catch(err => console.log(err));
+        });
         setGoodsInCart([]);
-        setisLoading(false);
     }
     return (
         <aside className="fixed inset-0 overflow-y-hidden z-10">
@@ -65,7 +67,6 @@ const Ahead = ({onClose, goods, onRemove}) => {
                                 </div>
                             </div>
                             <button
-                                disabled={isLoading}
                                 onClick={onClickOrder}
                                 className="flex flex-none group justify-center items-center text-center border-0 bg-btn relative h-14 text-white rounded-xl active:bg-green-700 hover:opacity-90 focus:outline-none">
                                 Оформить заказ
