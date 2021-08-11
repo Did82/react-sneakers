@@ -63,7 +63,6 @@ const App = () => {
             axios.post(`https://60f0071af587af00179d3cf2.mockapi.io/favorites`, obj)
                 .then((res) => setGoodsInFavorites(prev => [...prev, res.data]))
                 .catch(err => console.log(err))
-
         }
     }
 
@@ -75,7 +74,8 @@ const App = () => {
     }
 
     return (
-        <AppContext.Provider value={{goods, goodsInCart, goodsInFavorites, isGoodsInCart, isGoodsInFavorites}}>
+        <AppContext.Provider
+            value={{goods, goodsInCart, goodsInFavorites, isGoodsInCart, isGoodsInFavorites, setGoodsInCart}}>
             <div className="bg-white rounded-3xl shadow-lg max-w-wrapper my-12 mx-auto">
                 <Header onClickCart={() => {
                     setIsCartOpened(true);
@@ -87,7 +87,6 @@ const App = () => {
                         setIsCartOpened(false);
                         document.body.style.overflow = "auto";
                     }}
-                    goodsInCart={goodsInCart}
                     goods={goods}
                     onRemove={onRemoveCartItem}/>}
 

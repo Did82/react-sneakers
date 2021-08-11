@@ -1,8 +1,22 @@
 import React, {Fragment} from "react";
 import Empty from "./Empty";
+import AppContext from "../context";
+import axios from "axios";
 
-const Ahead = ({onClose, goodsInCart = [], goods, onRemove}) => {
-    // const itemInCart = goodsInCart.map(item => goods.find(obj => item.good === obj.id));
+const Ahead = ({onClose, goods, onRemove}) => {
+    const [isOrdered, setIsOrdered] = React.useState(false);
+    const [orderId, setOrderId] = React.useState();
+    const [isLoading, setisLoading] = React.useState(false);
+    const {goodsInCart, setGoodsInCart} = React.useContext(AppContext);
+    const onClickOrder = () => {
+        setisLoading(true);
+        axios.post(`https://60f0071af587af00179d3cf2.mockapi.io/orders`, {goods: goodsInCart})
+            .then(res => setOrderId(res.data.id))
+            .catch(err => console.log(err));
+        setIsOrdered(true);
+        setGoodsInCart([]);
+        setisLoading(false);
+    }
     return (
         <aside className="fixed inset-0 overflow-y-hidden z-10">
             <div className="absolute inset-0 overflow-hidden">
@@ -51,6 +65,8 @@ const Ahead = ({onClose, goodsInCart = [], goods, onRemove}) => {
                                 </div>
                             </div>
                             <button
+                                disabled={isLoading}
+                                onClick={onClickOrder}
                                 className="flex flex-none group justify-center items-center text-center border-0 bg-btn relative h-14 text-white rounded-xl active:bg-green-700 hover:opacity-90 focus:outline-none">
                                 Оформить заказ
                                 <img
@@ -59,9 +75,9 @@ const Ahead = ({onClose, goodsInCart = [], goods, onRemove}) => {
                             </button>
                         </Fragment> :
                         <Empty
-                            title="Корзина пустая"
-                            description="Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
-                            img="/img/cart-empty.jpg"
+                            title={isOrdered ? "Заказ оформлен!" : "Корзина пустая"}
+                            description={isOrdered ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке` : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."}
+                            img={isOrdered ? "/img/order.jpg" : "/img/cart-empty.jpg"}
                             onClose={onClose}/>}
                 </div>
             </div>
