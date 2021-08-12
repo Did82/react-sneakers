@@ -1,7 +1,9 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {useCart} from "../hooks/useCart";
 
 const Header = (props) => {
+    const {totalPrice} = useCart();
     return (
         <header className="flex justify-between p-4 border-b">
             <Link to="/">
@@ -17,7 +19,7 @@ const Header = (props) => {
                 <ul className="flex gap-6 items-center">
                     <li className="flex gap-2 items-center cursor-pointer" onClick={props.onClickCart}>
                         <img src="/img/cart.svg" alt="Cart"/>
-                        <span>1205 руб.</span>
+                        <span>{totalPrice} руб.</span>
                     </li>
                     <li className="cursor-pointer transition ease-in-out duration-200 transform hover:scale-125">
                         <Link to="/favorites">

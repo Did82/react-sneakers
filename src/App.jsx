@@ -87,7 +87,6 @@ const App = () => {
                         setIsCartOpened(false);
                         document.body.style.overflow = "auto";
                     }}
-                    goods={goods}
                     onRemove={onRemoveCartItem}/>}
 
                 <main className="p-4">

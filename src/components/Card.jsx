@@ -11,7 +11,7 @@ const Card = ({
                   onClickPlus,
                   onClickFavorite,
               }) => {
-    const { isGoodsInCart, isGoodsInFavorites } = React.useContext(AppContext);
+    const {isGoodsInCart, isGoodsInFavorites} = React.useContext(AppContext);
 
     const onClickPlusButton = () => {
         onClickPlus({good: id});

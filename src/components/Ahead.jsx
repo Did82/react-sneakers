@@ -2,11 +2,13 @@ import React, {Fragment} from "react";
 import Empty from "./Empty";
 import AppContext from "../context";
 import axios from "axios";
+import {useCart} from "../hooks/useCart";
 
-const Ahead = ({onClose, goods, onRemove}) => {
+const Ahead = ({onClose, onRemove}) => {
     const [isOrdered, setIsOrdered] = React.useState(false);
     const [orderId, setOrderId] = React.useState();
-    const {goodsInCart, setGoodsInCart} = React.useContext(AppContext);
+    const {goods, goodsInCart, setGoodsInCart} = React.useContext(AppContext);
+    const {totalPrice} = useCart();
     const onClickOrder = () => {
         axios.post(`https://60f0071af587af00179d3cf2.mockapi.io/orders`, {goods: goodsInCart})
             .then(res => setOrderId(res.data.id))
@@ -58,12 +60,12 @@ const Ahead = ({onClose, goods, onRemove}) => {
                                 <div className="flex justify-between">
                                     <span>Итого:</span>
                                     <div className="border-b-2 border-dashed flex-grow mx-1.5 mb-1.5"></div>
-                                    <span className="font-bold">21 498 руб.</span>
+                                    <span className="font-bold">{totalPrice} руб.</span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span>Налог 5%:</span>
+                                    <span>Включая налог 5%:</span>
                                     <div className="border-b-2 border-dashed flex-grow mx-1.5 mb-1.5"></div>
-                                    <span className="font-bold">1074 руб.</span>
+                                    <span className="font-bold">{totalPrice - Math.round(totalPrice * 0.95)} руб.</span>
                                 </div>
                             </div>
                             <button
