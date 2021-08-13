@@ -6,6 +6,7 @@ import axios from "axios";
 import Home from "./pages/Home";
 import {Route} from 'react-router';
 import Favorites from "./pages/Favorites";
+import Orders from "./pages/orders";
 
 const App = () => {
     const [goods, setGoods] = React.useState([]);
@@ -75,7 +76,16 @@ const App = () => {
 
     return (
         <AppContext.Provider
-            value={{goods, goodsInCart, goodsInFavorites, isGoodsInCart, isGoodsInFavorites, setGoodsInCart}}>
+            value={{
+                goods,
+                goodsInCart,
+                goodsInFavorites,
+                isGoodsInCart,
+                isGoodsInFavorites,
+                setGoodsInCart,
+                isLoading,
+                setIsLoading
+            }}>
             <div className="bg-white rounded-3xl shadow-lg max-w-wrapper my-12 mx-auto">
                 <Header onClickCart={() => {
                     setIsCartOpened(true);
@@ -104,6 +114,12 @@ const App = () => {
                     </Route>
                     <Route path="/favorites" exact>
                         <Favorites
+                            onAddToCart={onAddToCart}
+                            onAddToFavorites={onAddToFavorites}
+                        />
+                    </Route>
+                    <Route path="/orders" exact>
+                        <Orders
                             onAddToCart={onAddToCart}
                             onAddToFavorites={onAddToFavorites}
                         />

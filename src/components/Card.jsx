@@ -18,7 +18,6 @@ const Card = ({
     };
 
     const onClickFavoriteButton = () => {
-        // setIsFavorite(!isFavorite);
         onClickFavorite({good: id});
     };
 
@@ -41,11 +40,11 @@ const Card = ({
                     <rect x="0" y="150" rx="4" ry="4" width="175" height="15"/>
                 </ContentLoader>
                 : <Fragment>
-                    <button
+                    {onClickFavorite && <button
                         className="absolute border-0  focus:outline-none transition ease-in-out duration-200 transform hover:scale-125"
                         onClick={onClickFavoriteButton}>
                         <img src={isGoodsInFavorites(id) ? '/img/heart-active.svg' : '/img/heart.svg'} alt="Heart"/>
-                    </button>
+                    </button>}
                     <img className="place-self-center" src={imgUrl} alt="sneakers" width={133} height={113}/>
                     <h5 className="font-normal">{name}</h5>
                     <div className="flex justify-between items-center">
@@ -53,11 +52,11 @@ const Card = ({
                             <p className="uppercase text-sm text-gray-400">цена:</p>
                             <b>{price} руб.</b>
                         </div>
-                        <button
+                        {onClickPlus && <button
                             className="border-0 focus:outline-none transition ease-in-out duration-200 transform hover:scale-125"
                             onClick={onClickPlusButton}>
                             <img src={isGoodsInCart(id) ? '/img/checked.svg' : '/img/plus.svg'} alt="Plus"/>
-                        </button>
+                        </button>}
                     </div>
                 </Fragment>}
         </div>)

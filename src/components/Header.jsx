@@ -27,7 +27,9 @@ const Header = (props) => {
                         </Link>
                     </li>
                     <li className="cursor-pointer transition ease-in-out duration-200 transform hover:scale-125">
-                        <img src="/img/user.svg" alt="User"/>
+                        <Link to="/orders">
+                            <img src="/img/user.svg" alt="User"/>
+                        </Link>
                     </li>
                 </ul>
             </div>
