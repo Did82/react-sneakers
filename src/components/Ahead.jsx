@@ -29,12 +29,11 @@ const Ahead = ({onClose, onRemove}) => {
             <aside className="fixed inset-0 overflow-y-hidden z-10">
                 <div className="absolute inset-0 overflow-hidden">
                     <Transition.Child
-                        // appear={true}
                         as={Fragment}
-                        enter="ease-in-out duration-500"
+                        enter="ease-in-out duration-300"
                         enterFrom="opacity-0"
                         enterTo="opacity-100"
-                        leave="ease-in-out duration-500"
+                        leave="ease-in-out duration-300"
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
@@ -43,12 +42,11 @@ const Ahead = ({onClose, onRemove}) => {
                     </Transition.Child>
 
                     <Transition.Child
-                        // appear={true}
                         as={Fragment}
-                        enter="transform transition ease-in-out duration-500"
+                        enter="transform transition ease-in-out duration-300"
                         enterFrom="translate-x-full"
                         enterTo="translate-x-0"
-                        leave="transform transition ease-in-out duration-500"
+                        leave="transform transition ease-in-out duration-300"
                         leaveFrom="translate-x-0"
                         leaveTo="translate-x-full"
                     >
@@ -83,7 +81,7 @@ const Ahead = ({onClose, onRemove}) => {
                                                 </div>
                                             ))}
                                     </div>
-                                    <div className="flex flex-col gap-2  flex-none">
+                                    <div className="flex flex-col gap-2 flex-none">
                                         <div className="flex justify-between">
                                             <span>Итого:</span>
                                             <div className="border-b-2 border-dashed flex-grow mx-1.5 mb-1.5"></div>

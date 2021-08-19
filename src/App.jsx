@@ -37,19 +37,17 @@ const App = () => {
     const isGoodsInCart = id => goodsInCart.some(good => good.good === id);
     const isGoodsInFavorites = id => goodsInFavorites.some(good => good.good === id);
 
-    // const isAdded = (arr, id) => arr.some(good => good.good === id);
-
     const onAddToCart = (obj) => {
         const item = goodsInCart.find(good => good.good === obj.good);
         if (isGoodsInCart(obj.good)) {
             axios.delete(`https://60f0071af587af00179d3cf2.mockapi.io/cart/${item.id}`)
-                .then(res => console.log(res.data))
-                .catch(err => console.log(err))
+                // .then(res => console.log(res.data))
+                .catch(err => console.error(err))
                 .then(() => setGoodsInCart(prev => prev.filter(el => el.good !== obj.good)))
         } else {
             axios.post(`https://60f0071af587af00179d3cf2.mockapi.io/cart`, obj)
                 .then(res => setGoodsInCart(prev => [...prev, res.data]))
-                .catch(err => console.log(err))
+                .catch(err => console.error(err))
         }
     }
 
@@ -57,20 +55,20 @@ const App = () => {
         const item = goodsInFavorites.find(good => good.good === obj.good);
         if (isGoodsInFavorites(obj.good)) {
             axios.delete(`https://60f0071af587af00179d3cf2.mockapi.io/favorites/${item.id}`)
-                .then(res => console.log(res.data))
-                .catch(err => console.log(err))
+                // .then(res => console.log(res.data))
+                .catch(err => console.error(err))
                 .then(() => setGoodsInFavorites(prev => prev.filter(el => el.good !== obj.good)))
         } else {
             axios.post(`https://60f0071af587af00179d3cf2.mockapi.io/favorites`, obj)
                 .then((res) => setGoodsInFavorites(prev => [...prev, res.data]))
-                .catch(err => console.log(err))
+                .catch(err => console.error(err))
         }
     }
 
     const onRemoveCartItem = (obj) => {
         axios.delete(`https://60f0071af587af00179d3cf2.mockapi.io/cart/${obj.id}`)
-            .then(res => console.log(res.data))
-            .catch(err => console.log(err))
+            // .then(res => console.log(res.data))
+            .catch(err => console.error(err))
             .then(() => setGoodsInCart(prev => prev.filter(item => item.id !== obj.id)));
     }
 
@@ -87,7 +85,7 @@ const App = () => {
                 isLoading,
                 setIsLoading
             }}>
-            <div className="bg-white rounded-3xl shadow-lg max-w-wrapper my-12 mx-auto">
+            <div className="bg-white rounded-3xl shadow-lg max-w-wrapper my-12 mx-auto flex flex-col">
                 <Header onClickCart={() => {
                     setIsCartOpened(true);
                     document.body.style.overflow = "hidden";
@@ -101,7 +99,7 @@ const App = () => {
                     onRemove={onRemoveCartItem}
                 />
 
-                <main className="p-4">
+                <main className="p-4 flex flex-col flex-grow">
                     <Route path="/" exact>
                         <Home
                             goods={goods}
