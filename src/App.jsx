@@ -92,14 +92,14 @@ const App = () => {
                     setIsCartOpened(true);
                     document.body.style.overflow = "hidden";
                 }}/>
-                {isCartOpen &&
+
                 <Ahead
                     onClose={() => {
                         setIsCartOpened(false);
                         document.body.style.overflow = "auto";
                     }}
                     onRemove={onRemoveCartItem}
-                />}
+                />
 
                 <main className="p-4">
                     <Route path="/" exact>
