@@ -82,6 +82,7 @@ const App = () => {
                 goodsInFavorites,
                 isGoodsInCart,
                 isGoodsInFavorites,
+                isCartOpen,
                 setGoodsInCart,
                 isLoading,
                 setIsLoading
@@ -97,7 +98,8 @@ const App = () => {
                         setIsCartOpened(false);
                         document.body.style.overflow = "auto";
                     }}
-                    onRemove={onRemoveCartItem}/>}
+                    onRemove={onRemoveCartItem}
+                />}
 
                 <main className="p-4">
                     <Route path="/" exact>

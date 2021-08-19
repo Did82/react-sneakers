@@ -3,11 +3,12 @@ import Empty from "./Empty";
 import AppContext from "../context";
 import axios from "axios";
 import {useCart} from "../hooks/useCart";
+import { Transition } from '@headlessui/react';
 
 const Ahead = ({onClose, onRemove}) => {
     const [isOrdered, setIsOrdered] = React.useState(false);
     const [orderId, setOrderId] = React.useState();
-    const {goods, goodsInCart, setGoodsInCart} = React.useContext(AppContext);
+    const {goods, goodsInCart, setGoodsInCart, isCartOpen} = React.useContext(AppContext);
     const {totalPrice} = useCart();
     const onClickOrder = () => {
         axios.post(`https://60f0071af587af00179d3cf2.mockapi.io/orders`, {goods: goodsInCart})
@@ -24,9 +25,33 @@ const Ahead = ({onClose, onRemove}) => {
     return (
         <aside className="fixed inset-0 overflow-y-hidden z-10">
             <div className="absolute inset-0 overflow-hidden">
-                <div onClick={onClose}
-                     className="absolute inset-0 bg-black bg-opacity-50 transition-opacity"></div>
-                <div className="absolute inset-y-0 right-0 bg-white w-96 shadow-2xl p-6 flex flex-col gap-4">
+                <Transition
+                    appear={true}
+                    show={isCartOpen}
+                    as={Fragment}
+                    enter="ease-in-out duration-500"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="ease-in-out duration-500"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                >
+                    <div onClick={onClose}
+                         className="absolute inset-0 bg-black bg-opacity-50 transition-opacity"></div>
+                </Transition>
+
+                <Transition
+                    appear={true}
+                    show={isCartOpen}
+                    as={Fragment}
+                    enter="transform transition ease-in-out duration-500"
+                    enterFrom="translate-x-full"
+                    enterTo="translate-x-0"
+                    leave="transform transition ease-in-out duration-500"
+                    leaveFrom="translate-x-0"
+                    leaveTo="translate-x-full"
+                >
+                    <div className="absolute inset-y-0 right-0 bg-white w-96 shadow-2xl p-6 flex flex-col gap-4">
                     <div className="flex justify-between flex-none">
                         <h2 className="text-xl font-bold mb-2">Корзина</h2>
                         <button onClick={onClose}
@@ -83,6 +108,7 @@ const Ahead = ({onClose, onRemove}) => {
                             img={isOrdered ? "/img/order.jpg" : "/img/cart-empty.jpg"}
                             onClose={onClose}/>}
                 </div>
+                </Transition>
             </div>
         </aside>
     )

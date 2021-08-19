@@ -6,6 +6,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^1.4.0",
     "axios": "^0.21.1",
     "react": "^17.0.0",
     "react-content-loader": "^6.0.3",
