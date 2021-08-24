@@ -7,8 +7,8 @@ const Header = (props) => {
     return (
         <header className="flex justify-between p-4 border-b">
             <Link to="/">
-                <div className="flex gap-3 m-4 items-center">
-                    <img src="/img/logo.png" alt="logo" className="w-10 h-10"/>
+                <div className="group flex gap-3 m-4 items-center">
+                    <img src="/img/logo.png" alt="logo" className="w-10 h-10 transition ease-in-out duration-200 transform group-hover:scale-125"/>
                     <div>
                         <h3 className="font-bold uppercase text-xl">React Sneakers</h3>
                         <p className="text-sm text-gray-500">Магазин лучших кроссовок</p>
@@ -17,8 +17,8 @@ const Header = (props) => {
             </Link>
             <div className="flex items-center m-4">
                 <ul className="flex gap-6 items-center">
-                    <li className="flex gap-2 items-center cursor-pointer" onClick={props.onClickCart}>
-                        <img src="/img/cart.svg" alt="Cart"/>
+                    <li className="group flex gap-2 items-center cursor-pointer" onClick={props.onClickCart}>
+                        <img src="/img/cart.svg" alt="Cart" className="transition ease-in-out duration-200 transform group-hover:scale-125"/>
                         <span>{totalPrice} руб.</span>
                     </li>
                     <li className="cursor-pointer transition ease-in-out duration-200 transform hover:scale-125">
