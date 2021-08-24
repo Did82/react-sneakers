@@ -1,9 +1,12 @@
 {
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "homepage": "https://did82.github.io/react-sneakers/",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.0",
@@ -18,6 +21,7 @@
   "devDependencies": {
     "@vitejs/plugin-react-refresh": "^1.3.1",
     "autoprefixer": "^10.2.6",
+    "gh-pages": "^3.2.3",
     "postcss": "^8.3.5",
     "tailwindcss": "^2.2.4",
     "vite": "^2.3.8"
