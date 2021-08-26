@@ -100,7 +100,7 @@ const App = () => {
                 />
 
                 <main className="p-4 flex flex-col flex-grow">
-                    <Route path="/" exact>
+                    <Route path="/react-sneakers/" exact>
                         <Home
                             goods={goods}
                             searchValue={searchValue}
@@ -112,13 +112,13 @@ const App = () => {
                             isLoading={isLoading}
                         />
                     </Route>
-                    <Route path="/favorites" exact>
+                    <Route path="/react-sneakers/favorites/" exact>
                         <Favorites
                             onAddToCart={onAddToCart}
                             onAddToFavorites={onAddToFavorites}
                         />
                     </Route>
-                    <Route path="/orders" exact>
+                    <Route path="/react-sneakers/orders/" exact>
                         <Orders
                             onAddToCart={onAddToCart}
                             onAddToFavorites={onAddToFavorites}

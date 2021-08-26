@@ -1,5 +1,6 @@
 import React, {Fragment} from 'react';
 import Card from "../components/Card";
+import images from "../assets";
 
 const Home = ({
                   goods,
@@ -8,7 +9,7 @@ const Home = ({
                   onAddToCart,
                   onAddToFavorites,
                   setSearchValue,
-                  isLoading
+                  isLoading,
               }) => {
     const renderItems = () => {
         const filter = goods.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
@@ -30,14 +31,14 @@ const Home = ({
                     {searchValue ? `Поиск по запросу: "${searchValue}"` : 'Все кроссовки'}
                 </h1>
                 <div className="flex border rounded-lg items-center w-76">
-                    <img src="/img/search.svg" alt="Search" className="mx-2"/>
+                    <img src={images.search} alt="Search" className="mx-2"/>
                     <input
                         onChange={onChangeSearchValue}
                         value={searchValue}
                         className="border-0 outline-none rounded-lg h-10 text-gray-700"
                         type="text"
                         placeholder="Поиск..."/>
-                    {searchValue && <img onClick={() => setSearchValue('')} src="/img/delete.svg" alt="Clear"
+                    {searchValue && <img onClick={() => setSearchValue('')} src={images.remove} alt="Clear"
                                          className="mr-2 justify-self-end w-6"/>}
                 </div>
             </div>

@@ -2,6 +2,7 @@ import React, {Fragment} from 'react';
 import Card from "../components/Card";
 import AppContext from "../context";
 import Empty from "../components/Empty";
+import images from "../assets";
 
 const Favorites = ({onAddToCart, onAddToFavorites}) => {
     const {goods, goodsInFavorites} = React.useContext(AppContext);
@@ -26,13 +27,11 @@ const Favorites = ({onAddToCart, onAddToFavorites}) => {
                             )
                     }
                 </div> :
-                <div className="my-36">
-                    <Empty
-                        title="Закладок нет :("
-                        description="Вы ничего не добавляли в закладки"
-                        img="/img/empty-smile.svg"
-                    />
-                </div>
+                <Empty
+                    title="Закладок нет :("
+                    description="Вы ничего не добавляли в закладки"
+                    img={images.emptySmile}
+                />
             }
         </Fragment>
     )

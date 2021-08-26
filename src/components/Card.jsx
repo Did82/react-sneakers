@@ -1,12 +1,13 @@
 import React, {Fragment} from "react";
 import ContentLoader from "react-content-loader";
 import AppContext from "../context";
+import images from "../assets";
+import sneakers from "../assets/img/goods";
 
 const Card = ({
                   isLoading,
                   id,
                   name,
-                  imgUrl,
                   price,
                   onClickPlus,
                   onClickFavorite,
@@ -43,9 +44,9 @@ const Card = ({
                     {onClickFavorite && <button
                         className="absolute border-0  focus:outline-none transition ease-in-out duration-200 transform hover:scale-125"
                         onClick={onClickFavoriteButton}>
-                        <img src={isGoodsInFavorites(id) ? '/img/heart-active.svg' : '/img/heart.svg'} alt="Heart"/>
+                        <img src={isGoodsInFavorites(id) ? images.heartActive : images.heart} alt="Heart"/>
                     </button>}
-                    <img className="place-self-center" src={imgUrl} alt="sneakers" width={133} height={113}/>
+                    <img className="place-self-center" src={sneakers[id - 1]} alt="sneakers" width={133} height={113}/>
                     <h5 className="font-normal">{name}</h5>
                     <div className="flex justify-between items-center">
                         <div>
@@ -55,7 +56,7 @@ const Card = ({
                         {onClickPlus && <button
                             className="border-0 focus:outline-none transition ease-in-out duration-200 transform hover:scale-125"
                             onClick={onClickPlusButton}>
-                            <img src={isGoodsInCart(id) ? '/img/checked.svg' : '/img/plus.svg'} alt="Plus"/>
+                            <img src={isGoodsInCart(id) ? images.checked : images.plus} alt="Plus"/>
                         </button>}
                     </div>
                 </Fragment>}

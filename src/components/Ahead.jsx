@@ -4,6 +4,8 @@ import AppContext from "../context";
 import axios from "axios";
 import {useCart} from "../hooks/useCart";
 import {Transition} from '@headlessui/react';
+import images from "../assets";
+import sneakers from "../assets/img/goods";
 
 const Ahead = ({onClose, onRemove}) => {
     const [isOrdered, setIsOrdered] = React.useState(false);
@@ -55,7 +57,7 @@ const Ahead = ({onClose, onRemove}) => {
                                 <h2 className="text-xl font-bold mb-2">Корзина</h2>
                                 <button onClick={onClose}
                                         className="border-0 opacity-60 hover:opacity-100 transition-opacity focus:outline-none">
-                                    <img src="/img/delete.svg" alt="Close"/>
+                                    <img src={images.remove} alt="Close"/>
                                 </button>
                             </div>
                             {goodsInCart.length > 0 ? <Fragment>
@@ -65,7 +67,7 @@ const Ahead = ({onClose, onRemove}) => {
                                             .map(obj => (
                                                 <div key={obj.id}
                                                      className="flex items-center justify-between gap-4 border rounded-xl p-4">
-                                                    <img className="" src={obj.imgUrl} alt="Sneakers" height={70}
+                                                    <img className="" src={sneakers[obj.id - 1]} alt="Sneakers" height={70}
                                                          width={70}/>
                                                     <div className="flex flex-col gap-2">
                                                         <p className="text-sm">{obj.name}</p>
@@ -75,7 +77,7 @@ const Ahead = ({onClose, onRemove}) => {
                                                         className="border-0 opacity-60 hover:opacity-100 transition-opacity focus:outline-none">
                                                         <img
                                                             onClick={() => onRemove(goodsInCart.find(item => item.good === obj.id))}
-                                                            src="/img/delete.svg" alt="Delete"
+                                                            src={images.remove} alt="Delete"
                                                             className="w-14"/>
                                                     </button>
                                                 </div>
@@ -100,13 +102,13 @@ const Ahead = ({onClose, onRemove}) => {
                                         Оформить заказ
                                         <img
                                             className="absolute right-8 transition duration-500 ease-in-out transform group-hover:translate-x-1"
-                                            src="/img/arrow.svg" alt="Arrow"/>
+                                            src={images.arrow} alt="Arrow"/>
                                     </button>
                                 </Fragment> :
                                 <Empty
                                     title={isOrdered ? "Заказ оформлен!" : "Корзина пустая"}
                                     description={isOrdered ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке` : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."}
-                                    img={isOrdered ? "/img/order.jpg" : "/img/cart-empty.jpg"}
+                                    img={isOrdered ? images.order : images.cartEmpty}
                                     onClose={onClose}/>}
                         </div>
                     </Transition.Child>
